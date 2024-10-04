@@ -8,7 +8,7 @@ data "template_file" "user_data_ec2_windows" {
   template = file("${path.module}/templates/user_data_ec2_windows.ps1")
 
   vars = {
-    win_runner_token = local.win_runner_token
+    win_runner_token       = local.win_runner_token
     circle_server_endpoint = var.circle_server_endpoint
   }
 }
@@ -23,34 +23,34 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
     }
   }
 
-  image_id = var.windows_runner_ami
+  image_id                             = var.windows_runner_ami
   instance_initiated_shutdown_behavior = "terminate"
-  instance_type = var.windows_runner_instance_type
-  key_name = var.windows_server_keypair
+  instance_type                        = var.windows_runner_instance_type
+  key_name                             = var.windows_server_keypair
   metadata_options {
-  #  http_endpoint               = "enabled"
-  #  http_tokens                 = "required"
-  #  http_put_response_hop_limit = 1
-  #  instance_metadata_tags      = "enabled"
-  #}
-  network_interfaces {
-    associate_public_ip_address = true
-  }
-  placement {
-    availability_zone = "us-east-1a"
-  }
-  vpc_security_group_ids = [var.windows_runner_security_groups]
-  tag_specifications {
-    resource_type = "instance"
-    tags          = var.default_tags
-  }
-  user_data = filebase64("${path.module}/example.sh")
+    #  http_endpoint               = "enabled"
+    #  http_tokens                 = "required"
+    #  http_put_response_hop_limit = 1
+    #  instance_metadata_tags      = "enabled"
+    #}
+    network_interfaces {
+      associate_public_ip_address = true
     }
+    placement {
+      availability_zone = "us-east-1a"
+    }
+    vpc_security_group_ids = [var.windows_runner_security_groups]
+    tag_specifications {
+      resource_type = "instance"
+      tags          = var.default_tags
+    }
+    user_data = filebase64("${path.module}/example.sh")
+  }
 }
 
 
 resource "aws_autoscaling_group" "ec2_windows_runner_asg" {
-  name = "ec2_windows_runner_asg"
+  name                 = "ec2_windows_runner_asg"
   availability_zones   = ["us-east-1a"]
   desired_capacity     = 0
   max_size             = 1
