@@ -42,7 +42,7 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
     resource_type = "instance"
     tags          = var.default_tags
   }
-  user_data = data.template_file.user_data_ec2_windows.rendered
+  user_data = filebase64(data.template_file.user_data_ec2_windows.rendered)
 }
 
 
