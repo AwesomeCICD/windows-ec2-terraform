@@ -19,7 +19,7 @@ executors:
   tf-light:
     docker:
       - image: hashicorp/terraform:1.8.2
-    resource_class: small
+    resource_class: large
     environment:
       AWS_DEFAULT_REGION: << pipeline.parameters.aws-default-region >>
       WORKSPACE: << pipeline.parameters.terraform-workspace >>
