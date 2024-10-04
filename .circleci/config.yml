@@ -45,7 +45,7 @@ commands:
       - run:
           name: Run terraform init & plan 
           command: |
-            cd $WORKSPACE
+            cd terraform
             ls -lah
             pwd
             terraform init -input=false
