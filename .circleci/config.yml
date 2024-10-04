@@ -78,4 +78,4 @@ jobs:
 workflows:
   terraform:
     jobs:
-      - tf-plan
+      - tf-plan-apply
