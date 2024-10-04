@@ -49,7 +49,7 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
 resource "aws_autoscaling_group" "ec2_windows_runner_asg" {
   name                 = "ec2_windows_runner_asg"
   availability_zones   = ["us-east-1a"]
-  desired_capacity     = 0
+  desired_capacity     = 1
   max_size             = 1
   min_size             = 0
   termination_policies = ["OldestInstance"]
