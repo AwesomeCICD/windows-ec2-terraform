@@ -43,6 +43,7 @@ commands:
           name: Run terraform init & plan 
           command: |
             cd $WORKSPACE
+            pwd
             terraform init -input=false
             terraform plan -out tfapply
       - persist_to_workspace:
