@@ -22,9 +22,9 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
     associate_public_ip_address = true
   }
   placement {
-    availability_zone = "us-east-2a"
+    availability_zone = "us-east-1a"
   }
-  vpc_security_group_ids = [var.mp_sg_id]
+  vpc_security_group_ids = [var.windows_runner_security_groups]
   tag_specifications {
     resource_type = "instance"
     tags          = var.default_tags
