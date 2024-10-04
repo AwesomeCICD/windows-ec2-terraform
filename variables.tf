@@ -38,7 +38,6 @@ variable "windows_server_keypair" {
   default     = "windows-rsa-support-keypair"
 }
 
-
 variable "windows_runner_security_groups" {
   type        = list(string)
   description = "Security Group to be assigned to Windows Runner instances"
