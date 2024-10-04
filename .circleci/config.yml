@@ -13,7 +13,7 @@ parameters:
     default: "arn:aws:iam::992382483259:role/fieldeng_aws_ci_oidc_oauth_role"
   terraform-workspace:
     type: string
-    default: "terraform"
+    default: "/tmp/project/terraform"
 
 executors:
   tf-light:
