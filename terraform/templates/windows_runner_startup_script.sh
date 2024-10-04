@@ -1,6 +1,5 @@
 
 <powershell>
-
 $ErrorActionPreference = "Continue" 
 $platform = "windows/amd64"
 
