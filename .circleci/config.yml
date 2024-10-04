@@ -67,6 +67,7 @@ commands:
 
 jobs:
   tf-plan:
+    working_directory: /tmp/project
     executor: tf-light
     steps:
       - checkout
