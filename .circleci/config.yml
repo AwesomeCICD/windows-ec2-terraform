@@ -20,6 +20,7 @@ executors:
     docker:
       - image: hashicorp/terraform:1.8.2
     resource_class: large
+    working_directory: /tmp/project
     environment:
       AWS_DEFAULT_REGION: << pipeline.parameters.aws-default-region >>
       WORKSPACE: << pipeline.parameters.terraform-workspace >>
@@ -68,7 +69,6 @@ commands:
 
 jobs:
   tf-plan:
-    working_directory: /tmp/project
     executor: tf-light
     steps:
       - checkout
