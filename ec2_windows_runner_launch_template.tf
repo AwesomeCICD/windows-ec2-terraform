@@ -45,7 +45,9 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
     tags          = var.default_tags
   }
   user_data = filebase64("${path.module}/example.sh")
+    }
 }
+
 
 resource "aws_autoscaling_group" "ec2_windows_runner_asg" {
   name = "ec2_windows_runner_asg"
