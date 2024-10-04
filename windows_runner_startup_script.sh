@@ -4,6 +4,8 @@
 $ErrorActionPreference = "Continue" 
 $platform = "windows/amd64"
 
+$env:HOST_IP = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object {$_.InterfaceAlias -notlike "*Loopback*"}).IPAddress 
+
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 
@@ -58,7 +60,7 @@ api:
   auth_token: "${win_runner_token}"
   url: https://${circle_server_endpoint}
 runner:
-  name: "$env:COMPUTERNAME"
+  name: "$env:HOST_IP"
   mode: single-task
   working_directory: "./Workdir"
   cleanup_working_directory: true

@@ -1,4 +1,9 @@
 
+locals {
+  win_runner_token = jsondecode(data.aws_secretsmanager_secret_version.windows_ec2_runner_token_version.secret_string)["cci_win_ec2_runner_token"]
+}
+
+
 data "template_file" "user_data_ec2_windows" {
   template = file("${path.module}/templates/user_data_ec2_windows.ps1")
 
@@ -7,8 +12,6 @@ data "template_file" "user_data_ec2_windows" {
     circle_server_endpoint = var.circle_server_endpoint
   }
 }
-
-
 
 resource "aws_launch_template" "ec2_windows_runner_launch_template" {
   name = "ec2_windows_runner_launch_template"
@@ -22,8 +25,8 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
 
   image_id = var.windows_runner_ami
   instance_initiated_shutdown_behavior = "terminate"
-  instance_type = "t3a.medium"
-  key_name = var.support_server_keypair
+  instance_type = var.windows_runner_instance_type
+  key_name = var.windows_server_keypair
   metadata_options {
   #  http_endpoint               = "enabled"
   #  http_tokens                 = "required"

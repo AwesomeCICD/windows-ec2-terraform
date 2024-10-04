@@ -13,10 +13,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.47.0"
     }
-    circleci = {
-      source  = "kelvintaywl/circleci"
-      version = "1.0.1"
-    }
     local = {
       source  = "hashicorp/local"
       version = "2.5.1"

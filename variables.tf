@@ -13,11 +13,19 @@ data "aws_subnet" "us_east_1a_subnet_id" {
   default_for_az    = true
 }
 
-output "us_east_1a_subnet_id" {
-  value = data.aws_subnet.us_east_1a_subnet_id.id
+variable "windows_runner_instance_type" {
+  type = string
+  default = "t3a.medium"
 }
 
-variable "ec2_bastion_security_groups" {
+variable "windows_server_keypair" {
+  type = string
+  description = "Keypair to be associated with the Windows Servers"
+  default = "windows-rsa-support-keypair"
+}
+
+
+variable "windows_runner_security_groups" {
   type        = list(string)
   description = "Security Group to be assigned to Windows Runner instances"
   default     = ["sg-0c3c61cd884f24fd7"]

@@ -1,0 +1,79 @@
+
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@4.1.3
+
+parameters:
+  aws-default-region:
+    type: string
+    default: "us-east-1"
+  role-name:
+    type: string
+    default: "arn:aws:iam::992382483259:role/fieldeng_aws_ci_oidc_oauth_role"
+  terraform-workspace:
+    type: string
+    default: "."
+
+executors:
+  tf-light:
+    docker:
+      - image: hashicorp/terraform:1.8.2
+    resource_class: small
+    environment:
+      AWS_DEFAULT_REGION: << pipeline.parameters.aws-default-region >>
+      WORKSPACE: << pipeline.parameters.terraform-workspace >>
+
+commands:
+  aws-auth-setup:
+    steps:
+      - aws-cli/setup:
+          region: << pipeline.parameters.aws-default-region >>
+          role_arn: << pipeline.parameters.role-name >>
+          role_session_name: "CircleCI-${CIRCLE_WORKFLOW_ID}-${CIRCLE_JOB}"
+
+  tf-init-plan:
+    steps:
+      - checkout
+      - aws-cli/setup:
+          region: << pipeline.parameters.aws-default-region >>
+          role_arn: << pipeline.parameters.role-name >>
+          role_session_name: "CircleCI-${CIRCLE_WORKFLOW_ID}-${CIRCLE_JOB}"
+      - run:
+          name: Run terraform init & plan 
+          command: |
+            cd $WORKSPACE
+            terraform init -input=false
+            terraform plan -out tfapply
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  tf-apply:
+    steps:
+      - attach_workspace:
+          at: .
+      - aws-cli/setup:
+          region: << pipeline.parameters.aws-default-region >>
+          role_arn: << pipeline.parameters.role-name >>
+          role_session_name: "CircleCI-${CIRCLE_WORKFLOW_ID}-${CIRCLE_JOB}"
+      - run:
+          name: Run terraform apply
+          command: |
+            cd $WORKSPACE
+            terraform apply -auto-approve tfapply
+          no_output_timeout: 3h
+
+jobs:
+  tf-plan:
+    executor: tf-light
+    steps:
+      - checkout
+      - aws-auth-setup
+      - tf-init-plan
+
+workflows:
+  terraform:
+    jobs:
+      - tf-plan
