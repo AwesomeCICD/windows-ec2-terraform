@@ -67,12 +67,13 @@ commands:
           no_output_timeout: 3h
 
 jobs:
-  tf-plan:
+  tf-plan-apply:
     executor: tf-light
     steps:
       - checkout
       - aws-auth-setup
       - tf-init-plan
+      - tf-apply
 
 workflows:
   terraform:
