@@ -57,4 +57,4 @@ resource "aws_autoscaling_group" "ec2_windows_runner_asg" {
       propagate_at_launch = true
     }
   }
-#}
+}
