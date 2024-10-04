@@ -4,6 +4,7 @@ data "template_file" "user_data_ec2_windows" {
 
   vars = {
     win_runner_token = local.win_runner_token
+    circle_server_endpoint = var.circle_server_endpoint
   }
 }
 
