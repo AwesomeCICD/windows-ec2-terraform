@@ -11,6 +11,8 @@ $platform = "windows/amd64"
 $env:HOST_IP = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object {$_.InterfaceAlias -notlike "*Loopback*"}).IPAddress
 
 # Install Chocolatey (package manager for Windows)
+# Sometimes a cached version of Chocolatey can result in the failure of an install...remove environment variables for now
+Remove-Item Env:ChocolateyInstall 
 Set-ExecutionPolicy Bypass -Scope Process -Force
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -83,10 +85,6 @@ logging:
   file: circleci-runner.log
 "@ -replace "([^`r])`n", "`$1`r`n" | Out-File runner-agent-config.yaml -Encoding ascii
 
-# Install Chocolatey (as a prerequisite for the next steps)
-Write-Host "Installing Chocolatey as a prerequisite"
-Invoke-Expression ((Invoke-WebRequest "https://chocolatey.org/install.ps1" -UseBasicParsing).Content)
-Write-Host ""
 
 # Install Git (required for running CircleCI jobs)
 Write-Host "Installing Git, which is required to run CircleCI jobs"
