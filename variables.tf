@@ -17,6 +17,12 @@ output "us_east_1a_subnet_id" {
   value = data.aws_subnet.us_east_1a_subnet_id.id
 }
 
+variable "ec2_bastion_security_groups" {
+  type        = list(string)
+  description = "Security Group to be assigned to Windows Runner instances"
+  default     = ["sg-0c3c61cd884f24fd7"]
+}
+
 variable "default_tags" {
   type = map(string)
   default = {
