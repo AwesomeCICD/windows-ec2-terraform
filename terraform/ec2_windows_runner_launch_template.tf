@@ -5,7 +5,7 @@ locals {
 
 
 data "template_file" "user_data_ec2_windows" {
-  template = file("${path.module}/windows_runner_startup_script.ps1")
+  template = file("${path.module}/templates/windows_runner_startup_script.ps1")
 
   vars = {
     win_runner_token       = local.win_runner_token
