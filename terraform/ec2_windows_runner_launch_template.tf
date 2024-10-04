@@ -65,6 +65,12 @@ resource "aws_autoscaling_group" "ec2_windows_runner_asg" {
     propagate_at_launch = "true"
   }
 
+  tag {
+    key                 = "Name"
+    value               = "cci_windows_machine_runner"
+    propagate_at_launch = "true"
+  }
+
   dynamic "tag" {
     for_each = var.default_tags
     content {
