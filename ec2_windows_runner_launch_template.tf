@@ -1,16 +1,27 @@
+
+data "template_file" "user_data_ec2_windows" {
+  template = file("${path.module}/templates/user_data_ec2_windows.ps1")
+
+  vars = {
+    win_runner_token = local.win_runner_token
+  }
+}
+
+
+
 resource "aws_launch_template" "ec2_windows_runner_launch_template" {
   name = "ec2_windows_runner_launch_template"
 
   block_device_mappings {
-    #device_name = "/dev/sdf"
+    device_name = "/dev/sda1"
     ebs {
-      volume_size = 20
+      volume_size = 50
     }
   }
 
-  image_id = var.ec2_bastion_ami
+  image_id = var.windows_runner_ami
   instance_initiated_shutdown_behavior = "terminate"
-  instance_type = "t2.micro"
+  instance_type = "t3a.medium"
   key_name = var.support_server_keypair
   metadata_options {
   #  http_endpoint               = "enabled"
