@@ -41,7 +41,7 @@ variable "windows_server_keypair" {
 variable "windows_runner_security_groups" {
   type        = list(string)
   description = "Security Group to be assigned to Windows Runner instances"
-  default     = ["sg-0c3c61cd884f24fd7"]
+  default     = ["sg-0bc5275959d66b98e"]
 }
 
 variable "default_tags" {
