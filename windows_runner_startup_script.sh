@@ -56,7 +56,7 @@ New-Item -Name Workdir -ItemType Directory
 @"
 api:
   auth_token: "${win_runner_token}"
-  url: https://runner.circleci.com
+  url: https://${circle_server_endpoint}
 runner:
   name: "$env:COMPUTERNAME"
   mode: single-task
