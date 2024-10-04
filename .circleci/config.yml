@@ -13,12 +13,12 @@ parameters:
     default: "arn:aws:iam::992382483259:role/fieldeng_aws_ci_oidc_oauth_role"
   terraform-workspace:
     type: string
-    default: "/tmp/project/terraform"
+    default: "terraform"
 
 executors:
   tf-light:
     docker:
-      - image: hashicorp/terraform:1.8.2
+      - image: hashicorp/terraform:1.8.3
     resource_class: large
     working_directory: /tmp/project
     environment:
@@ -45,9 +45,7 @@ commands:
       - run:
           name: Run terraform init & plan 
           command: |
-            cd terraform
-            ls -lah
-            pwd
+            cd $WORKSPACE
             terraform init -input=false
             terraform plan -out tfapply
       - persist_to_workspace:
