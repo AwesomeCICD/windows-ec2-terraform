@@ -7,7 +7,7 @@ data "template_file" "user_data_ec2_windows" {
     circle_server_endpoint = var.circle_server_endpoint
   }
 }
-
+terraform/templates/windows_runner_startup_script.sh
 locals {
   win_runner_token = jsondecode(data.aws_secretsmanager_secret_version.windows_ec2_runner_token_version.secret_string)["cci_win_ec2_runner_token"]
 }
