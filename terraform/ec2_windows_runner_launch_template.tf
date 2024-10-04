@@ -33,6 +33,8 @@ resource "aws_launch_template" "ec2_windows_runner_launch_template" {
   #  }
   network_interfaces {
     associate_public_ip_address = true
+    security_groups             = var.windows_runner_security_groups
+    subnet_id                   = "subnet-016896490ed3c0022"
   }
   placement {
     availability_zone = "us-east-1a"
